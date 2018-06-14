@@ -3,19 +3,60 @@
 
 <head>
     <title>Google Geocode Test</title>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="/googlemaps.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">    
     <link rel="stylesheet" href="/googlemaps.css" type="text/css" />
 </head>
 
 <body>
-    <div id="floating-panel">
-        <input id="address" type="textbox" value="Binningerstr. 6">
-        <input id="submit" type="button" value="Geocode">
+<div class="container-fluid text-center">    
+    <div class="row content">
+        <div class="col-sm-3 sidenav">
+            <div id="map" style="width: 400px; height: 400px;">
+                <!-- Replace the value of the key parameter with your own API key. -->
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSxv1l3IhAvtD8sh4Fg5TZhdvCggwxNKg&libraries=geometry&callback=initMap">
+                </script>
+            </div>
+        </div>
+        <div class="col-sm-6 text-left"> 
+            <p>Angaben zur Wohnung</p>
+            <div id="wohnung-data" class="form-group">
+                <label for="wohnviertelliste">Wohnviertel:</label>
+                <select id="wohnviertelliste" class="form-control" size="1">
+                    <option>Bitte ausw&auml;hlen...</option>
+                </select>
+                <label for="zimmerzahl">Zimmerzahl:</label>
+                <select id="zimmerzahl" class="form-control" size="1">
+                    <option>Bitte ausw&auml;hlen...</option>
+                </select>
+                <label for="baujahr">Baujahr:</label>
+                <select id="baujahr" class="form-control" size="1">
+                    <option>Bitte ausw&auml;hlen...</option>
+                </select>
+                <label for="renovation">Renovation:</label>
+                <select id="renovation" class="form-control" size="1">
+                    <option>Bitte ausw&auml;hlen...</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-3 text-left">
+            <div id="wv-ermitteln" class="form-group">
+                <input id="wv-submit" type="button" value="Wohnviertel ermitteln">
+            </div>
+            <div id="adresse-data" class="form-group">
+                <label for="addresse">Adresse:</label>
+                <input id="addresse" type="textbox" class="form-control" value="">
+                <input id="addr-submit" type="button" value="Wohnviertel suchen">
+            </div>
+            <div id="wv-data" class="form-group">
+                Zugeh&ouml;riges Wohnviertel<br>
+                <span id="wv-gefunden"></span>
+                <input id="wv-transfer" type="button" value="Wohnviertel &uuml;bernehmen">
+            </div>
+        </div>
     </div>
-    <div id="map"></div>
-    <!-- Replace the value of the key parameter with your own API key. -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSxv1l3IhAvtD8sh4Fg5TZhdvCggwxNKg&libraries=geometry&callback=initMap">
-    </script>
+</div>
 </body>
 
 </html>

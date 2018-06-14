@@ -3,22 +3,58 @@
 #map {
   height: 100%;
 }
+
 /* Optional: Makes the sample page fill the window. */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
-#floating-panel {
-  position: absolute;
-  top: 10px;
-  left: 25%;
-  z-index: 5;
-  background-color: #fff;
-  padding: 5px;
-  border: 1px solid #999;
-  text-align: center;
-  font-family: 'Roboto','sans-serif';
-  line-height: 30px;
-  padding-left: 10px;
+
+.container-fluid {
+  
+}
+
+.col-sm-3 {
+  width: 450px;
+}
+
+.col-sm-6 {
+  width: 500px;
+}
+
+.floating-panel {
+  /*position: absolute;*/
+  /*top: 10px;*/
+  /*float: left;*/
+  /*left: 25%;*/
+  /*z-index: 5;*/
+  /*background-color: #fff;*/
+  /*padding: 5px;*/
+  /*border: 1px solid #999;*/
+  /*text-align: left;*/
+  /*font-family: 'Roboto','sans-serif';*/
+  /*line-height: 20px;*/
+  /*padding-left: 10px;*/
+}
+
+#adresse-data {
+  display: none;
+  /*position: absolute;*/
+  /*top: 200px;*/
+}
+
+#wv-data {
+  display: none;
+  /*position: absolute;*/
+  /*top: 200px;*/
+}
+
+#wohnung-data {
+  /*position: absolute;*/
+  /*top: 10px;*/
+}
+
+#wv-ermitteln {
+  /*float: right;*/
 }
