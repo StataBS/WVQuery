@@ -23,21 +23,24 @@
             <p>Angaben zur Wohnung</p>
             <div id="wohnung-data" class="form-group">
                 <label for="wohnviertelliste">Wohnviertel:</label>
-                <select id="wohnviertelliste" class="form-control" size="1">
-                    <option>Bitte ausw&auml;hlen...</option>
+                <select id="wohnviertelliste" class="form-control" size="1" onChange={createPdfUrl()}>
+                    <option value=0>Bitte ausw&auml;hlen...</option>
                 </select>
                 <label for="zimmerzahl">Zimmerzahl:</label>
-                <select id="zimmerzahl" class="form-control" size="1">
-                    <option>Bitte ausw&auml;hlen...</option>
+                <select id="zimmerzahl" class="form-control" size="1" onChange={createPdfUrl()}>
+                    <option value=0>Bitte ausw&auml;hlen...</option>
                 </select>
                 <label for="baujahr">Baujahr:</label>
-                <select id="baujahr" class="form-control" size="1">
-                    <option>Bitte ausw&auml;hlen...</option>
+                <select id="baujahr" class="form-control" size="1" onChange={createPdfUrl()}>
+                    <option value=0>Bitte ausw&auml;hlen...</option>
                 </select>
                 <label for="renovation">Renovation:</label>
-                <select id="renovation" class="form-control" size="1">
-                    <option>Bitte ausw&auml;hlen...</option>
+                <select id="renovation" class="form-control" size="1" onChange={createPdfUrl()}>
+                    <option value=0>Bitte ausw&auml;hlen...</option>
                 </select>
+            </div>
+            <div id="PdfLinkDiv" class="form-group">
+                <a id="PdfLink" href="http://mietpreisraster.statabs.ch/?rect=6@59,57,10,6|7@11,88,275,6@89,35,10,135|8@0,0,297,210#page=7" target="_blank">Pdf</a>
             </div>
         </div>
         <div class="col-sm-3 text-left">
