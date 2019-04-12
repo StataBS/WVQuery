@@ -7,8 +7,12 @@
 /* Optional: Makes the sample page fill the window. */
 html, body {
   height: 100%;
+  width: 490px;
   margin: 0;
   padding: 0;
+  background-color: #fcfcfc;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
 }
 
 .container-fluid {
@@ -20,7 +24,7 @@ html, body {
 }
 
 .col-sm-6 {
-  width: 500px;
+  width: 245px;
 }
 
 .floating-panel {
@@ -39,7 +43,7 @@ html, body {
 }
 
 #adresse-data {
-  display: none;
+  /*display: none;*/
   /*position: absolute;*/
   /*top: 200px;*/
 }
@@ -57,4 +61,45 @@ html, body {
 
 #wv-ermitteln {
   /*float: right;*/
+}
+
+
+/*.well, */
+/*.btn,*/
+/*.pagination{*/
+/*    text-align: left;*/
+/*    margin-top: 5px;*/
+/*    margin-bottom: 5px;*/
+/*    padding: 0px;*/
+/*    font-size: 12px;*/
+/*}*/
+
+.well, .btn {
+    padding: 3px;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.btn {
+    background-color: #246036;
+    color: #ffffff;
+    padding-left: 15px;
+}
+
+legend{
+    margin-bottom: 0px;
+    border-bottom: none;
+    font-size: 12px;
+}
+
+.regular-text {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.form-control {
+  height: 30px;
+  font-size: 12px;
 }
