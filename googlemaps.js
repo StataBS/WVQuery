@@ -34,9 +34,9 @@ let zimmerZahlList =    [
 
 let baujahrList =       [
                         {index: 1, text: 'vor 1920', yPos: 55},
-                        {index: 2, text: '1921 - 1946', yPos: 68},
+                        {index: 2, text: '1921 - 1946', yPos: 69.5},
                         {index: 3, text: '1947 - 1960', yPos: 84},
-                        {index: 4, text: '1961 - 1970', yPos: 98},
+                        {index: 4, text: '1961 - 1970', yPos: 98.5},
                         {index: 5, text: '1971 - 1980', yPos: 112.5},
                         {index: 6, text: '1981 - 1990', yPos: 127.5},
                         {index: 7, text: '1991 - 2000', yPos: 141.5},
@@ -76,33 +76,28 @@ let wvxPosList =        [
 function initMap() {
     
     $("#open-pdf").hide();
+    $("#wv-data").hide();
     
     $('#addresse').keypress(function(e){
       if(e.keyCode==13)
       $('#wv-submit').click();
     });
 
-    // //Nordwestschweiz
-    // var defaultBounds = new google.maps.LatLngBounds(
-    //     new google.maps.LatLng(47.254020, 7.494277),
-    //     new google.maps.LatLng(47.617088, 8.134363));
-        
-    //Region Basel
+    //Region Basel Rechteck
     var defaultBounds = new google.maps.LatLngBounds(
         new google.maps.LatLng(47.518908, 7.554809),
         new google.maps.LatLng(47.601326, 7.693824));
 
     var options = {
         bounds: defaultBounds
-        //,types: ['geocode']
         ,types: ['address']
         ,componentRestrictions: {country: 'CH'}
     };
+    
     var input = document.getElementById('addresse');    
     var autocomplete = new google.maps.places.Autocomplete(input, options);    
     autocomplete.setOptions({strictBounds: true});
-    // autocomplete.setFields(['address_components']);
-    //autocomplete.setFields(['name']);
+    // We need a map object for the functionality but we don't show it on the page (id="map" -> display:none)
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 11,
         center: { 
@@ -114,27 +109,18 @@ function initMap() {
     
     document.getElementById('wv-submit').addEventListener('click', function() {
         geocodeAddress(geocoder);
-        //$("#wohnviertelliste").val(targetWohnviertel.Index);
-        //createPdfUrl();
-        //$("#adresse-data").show();
-        //$("#wv-data").show();
+        $("#wohnviertelliste").val(0);
     });
 
-    // document.getElementById('addr-submit').addEventListener('click', function() {
-    //     geocodeAddress(geocoder);
-    // });
-    
     document.getElementById('wv-transfer').addEventListener('click', function() {
         $("#wohnviertelliste").val(targetWohnviertel.Index);
-        //$("#adresse-data").hide();
         $("#wv-data").hide();
         $("#addresse").val("");
         createPdfUrl();
     });
 
     document.getElementById('pdf-open-button').addEventListener('click', function() {
-        console.log("PDF-Link: ", pdfLink)
-        // window.open(pdfLink, "_blank");
+        window.open(pdfLink, "_blank");
         return false;
     });
 
@@ -148,22 +134,14 @@ function initMap() {
      
 function geocodeAddress(geocoder) {
      var address = document.getElementById('addresse').value;
-     //geocoder.geocode({'address': address, 'componentRestrictions': {'postalCode': '4'}}, function(results, status) {
-     //geocoder.geocode({'address': address, 'componentRestrictions': {country: 'CH', postalCode: '8000'}}, function(results, status) {
      geocoder.geocode({'address': address }, function(results, status) {
          if (status === 'OK')
          {
             var loc = results[0].geometry.location;
             map.setCenter(loc); 
-            // findWohnviertel(loc);
             var result = findWohnviertel(loc);
-            console.log('target WV: ', targetWohnviertel.Name);
-            console.log(result);
             if (result != -1)
             {
-                console.log('target WV: ', targetWohnviertel.Name);
-                //console.log('Loc: ', loc.lat, ',', loc.lng);
-                //$("#wohnviertelliste").val(wv.Index);
                 $("#wv-gefunden").text(targetWohnviertel.Name);
                 $("#wv-data").show();
             }
@@ -222,13 +200,11 @@ function sortJsonByName(a,b){
 
 function loadWvList(selobj,url,nameattr)
 {
-    //$(selobj).empty();
     $.getJSON(url,{},function(data)
     {
         data.features = $(data.features).sort(sortJsonByName);
         $.each(data.features, function(key, value)
         {
-            //console.log('i: ' + i + ', obj:' + obj);
             $(selobj).append(
                 $('<option></option>')
                     .val(value.properties["TXT"])
@@ -255,8 +231,6 @@ function createPdfUrl()
     console.log("baujahrList val: " + $("#baujahr").val())
     console.log("renovationList val: " + $("#renovation").val())
     console.log("zimmerZahlList val: " + $("#zimmerzahl").val())
-    
-    // rect=6@59,57,10,6|7@11,88,275,6@89,35,10,135|8@0,0,297,210#page=7
     
     var pageNo;
     //r1: row, r2: column

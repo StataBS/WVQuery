@@ -1,105 +1,95 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Google Geocode Test</title>
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" src="/googlemaps.js"></script>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">    
-    <link rel="stylesheet" href="/googlemaps.css" type="text/css" />
-</head>
-<body>
-<div class="container-fluid text-center">    
-    <div class="row content">
-        <div class="col-sm-12 text-left">
-            <div id="map" style="width: 400px; height: 400px; display: none;">
-                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSxv1l3IhAvtD8sh4Fg5TZhdvCggwxNKg&libraries=geometry&libraries=places&callback=initMap">
-                </script>
+    <head>
+        <title>Google Geocode Test</title>
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="/googlemaps.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">    
+        <link rel="stylesheet" href="/googlemaps.css" type="text/css" />
+    </head>
+    <body>
+        <div class="container-fluid text-center">    
+            <div class="row content">
+                <div class="col-xs-12 text-left">
+                    <div id="map" style="width: 1px; height: 1px; display: none;">
+                        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSxv1l3IhAvtD8sh4Fg5TZhdvCggwxNKg&libraries=geometry&libraries=places&callback=initMap">
+                        </script>
+                    </div>
+                    <div class="regular-text">
+                        W&auml;hlen Sie ein Wohnviertel bzw. eine Gemeinde aus der Liste aus oder geben Sie eine Adresse in das Suchfeld ein:
+                    </div>
+                </div>
+            </div>    
+            <div class="row content">
+                <div class="col-xs-6 text-left"> 
+                    <div class="well" id="wohnviertelliste-select">
+                        <fieldset id="wohnviertelliste-criteria">
+                            <legend>Wohnviertel oder Gemeinde</legend>
+                            <select class="form-control" id="wohnviertelliste" size="1" onChange={createPdfUrl()}>
+                                <option value=0>Bitte ausw&auml;hlen...</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="col-xs-6 text-left">
+                    <div class="well" id="adresse-data">
+                        <fieldset id="adresse-data_criteria">
+                            <legend>Adresse: Strasse, Nr.</legend>
+                            <input id="addresse" type="textbox" class="form-control" placeholder="Suche...">
+                        </fieldset>
+                    </div>
+        
+                    <div id="wv-ermitteln" class="form-group">
+                        <button class="btn btn-block" id="wv-submit">Wohnviertel ermitteln</button>
+                    </div>
+        
+                    <div id="wv-data" class="form-group">
+                        Zugeh&ouml;riges Wohnviertel:<br>
+                        <span id="wv-gefunden"></span>
+                        <button class="btn btn-block" id="wv-transfer">Wohnviertel &uuml;bernehmen</button>
+                    </div>
+                </div>
             </div>
-            <div class="regular-text">
-                W&auml;hlen Sie ein Wohnviertel bzw. eine Gemeinde aus der Liste aus oder geben Sie eine Adresse in das Suchfeld ein:
+            <div class="row content">
+                <div class="col-xs-12 text-left">
+                    <div class="regular-text">
+                        Bestimmen Sie die Gr&ouml;sse, das Alter sowie den Zustand der Wohnung:
+                    </div>
+                </div>
+            </div>    
+            <div class="row content">
+                <div class="col-xs-6 text-left"> 
+                    <div class="well" id="zimmerzahl-select">
+                        <fieldset id="zimmerzahl-criteria">
+                            <legend>Zimmerzahl</legend>
+                            <select class="form-control" id="zimmerzahl" size="1" onChange={createPdfUrl()}>
+                                <option value=0>Bitte ausw&auml;hlen...</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="well" id="baujahr-select">
+                        <fieldset id="baujahr-criteria">
+                            <legend>Baujahr</legend>
+                            <select class="form-control" id="baujahr" size="1" onChange={createPdfUrl()}>
+                                <option value=0>Bitte ausw&auml;hlen...</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="well" id="renovation-select">
+                        <fieldset id="renovation-criteria">
+                            <legend>Renovation</legend>
+                            <select class="form-control" id="renovation" size="1" onChange={createPdfUrl()}>
+                                <option value=0>Bitte ausw&auml;hlen...</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div id="open-pdf" class="form-group">
+                        <button class="btn btn-block" id="pdf-open-button">quartier&uuml;blichen Mietpreis anzeigen</button>
+                   </div>
+                </div>
+                <div class="col-xs-6 text-left">
+                </div>
             </div>
         </div>
-    </div>    
-    <div class="row content">
-        <div class="col-sm-6 text-left"> 
-            <div class="well" id="darstellungsart">
-                <fieldset id="darstellungsart_criteria">
-                    <legend>Wohnviertel oder Gemeinde</legend>
-                    <select class="form-control" id="wohnviertelliste" size="1" onChange={createPdfUrl()}>
-                        <option value=0>Bitte ausw&auml;hlen...</option>
-                    </select>
-                </fieldset>
-            </div>
-        </div>
-        <div class="col-sm-6 text-left">
-            <!--<div id="adresse-data" class="form-group">-->
-            <!--    <label for="addresse">Adresse:</label>-->
-            <!--    <input id="addresse" type="textbox" class="form-control" value="">-->
-            <!--    <input id="addr-submit" type="button" value="Wohnviertel suchen">-->
-            <!--</div>-->
-            
-            
-            <div class="well" id="adresse-data">
-                <fieldset id="adresse-data_criteria">
-                    <legend>Adresse: Strasse, Nr.</legend>
-                    <input id="addresse" type="textbox" class="form-control" placeholder="Suche...">
-                </fieldset>
-            </div>
-
-            <div id="wv-ermitteln" class="form-group">
-                <button class="btn btn-block well" id="wv-submit">Wohnviertel ermitteln</button>
-            </div>
-
-            <div id="wv-data" class="form-group">
-                Zugeh&ouml;riges Wohnviertel:<br>
-                <span id="wv-gefunden"></span>
-                <button class="btn btn-block well" id="wv-transfer">Wohnviertel &uuml;bernehmen</button>
-            </div>
-            
-            
-        </div>
-    </div>
-    <div class="row content">
-        <div class="col-sm-12 text-left">
-            <div class="regular-text">
-                Bestimmen Sie die Gr&ouml;sse, das Alter sowie den Zustand der Wohnung:
-            </div>
-        </div>
-    </div>    
-    <div class="row content">
-        <div class="col-sm-6 text-left"> 
-            <div class="well" id="darstellungsart">
-                <fieldset id="darstellungsart_criteria">
-                    <legend>Zimmerzahl</legend>
-                    <select class="form-control" id="zimmerzahl" size="1" onChange={createPdfUrl()}>
-                        <option value=0>Bitte ausw&auml;hlen...</option>
-                    </select>
-                </fieldset>
-            </div>
-            <div class="well" id="darstellungsart">
-                <fieldset id="darstellungsart_criteria">
-                    <legend>Baujahr</legend>
-                    <select class="form-control" id="baujahr" size="1" onChange={createPdfUrl()}>
-                        <option value=0>Bitte ausw&auml;hlen...</option>
-                    </select>
-                </fieldset>
-            </div>
-            <div class="well" id="darstellungsart">
-                <fieldset id="darstellungsart_criteria">
-                    <legend>Renovation</legend>
-                    <select class="form-control" id="renovation" size="1" onChange={createPdfUrl()}>
-                        <option value=0>Bitte ausw&auml;hlen...</option>
-                    </select>
-                </fieldset>
-            </div>
-            <div id="open-pdf" class="form-group">
-                <button class="btn btn-block well" id="pdf-open-button">quartier&uuml;blichen Mietpreis anzeigen</button>
-           </div>
-        </div>
-        <div class="col-sm-6 text-left"> 
-        </div>
-    </div>
-</div>
-</body>
-
+    </body>
 </html>

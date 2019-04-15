@@ -7,7 +7,7 @@
 /* Optional: Makes the sample page fill the window. */
 html, body {
   height: 100%;
-  width: 490px;
+  width: 480px;
   margin: 0;
   padding: 0;
   background-color: #fcfcfc;
@@ -15,83 +15,37 @@ html, body {
 	font-size: 9pt;
 }
 
-.container-fluid {
-  
-}
-
-.col-sm-3 {
-  width: 450px;
-}
-
-.col-sm-6 {
-  width: 245px;
-}
-
-.floating-panel {
-  /*position: absolute;*/
-  /*top: 10px;*/
-  /*float: left;*/
-  /*left: 25%;*/
-  /*z-index: 5;*/
-  /*background-color: #fff;*/
-  /*padding: 5px;*/
-  /*border: 1px solid #999;*/
-  /*text-align: left;*/
-  /*font-family: 'Roboto','sans-serif';*/
-  /*line-height: 20px;*/
-  /*padding-left: 10px;*/
-}
-
-#adresse-data {
-  /*display: none;*/
-  /*position: absolute;*/
-  /*top: 200px;*/
-}
-
-#wv-data {
-  display: none;
-  /*position: absolute;*/
-  /*top: 200px;*/
-}
-
-#wohnung-data {
-  /*position: absolute;*/
-  /*top: 10px;*/
-}
-
-#wv-ermitteln {
-  /*float: right;*/
-}
-
-
-/*.well, */
-/*.btn,*/
-/*.pagination{*/
-/*    text-align: left;*/
-/*    margin-top: 5px;*/
-/*    margin-bottom: 5px;*/
-/*    padding: 0px;*/
-/*    font-size: 12px;*/
-/*}*/
-
 .well, .btn {
-    padding: 3px;
-    text-align: left;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-size: 12px;
+  padding: 3px;
+  text-align: left;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 12px;
 }
 
 .btn {
-    background-color: #246036;
-    color: #ffffff;
-    padding-left: 15px;
+  background-color: #246036;
+  color: #ffffff;
+  padding: 6px 12px;
+  opacity: 0.8;
+}
+
+.btn:hover {
+  opacity: 1;
+  color: #ffffff;
+  transition: 0.4s;
+}
+
+.btn:focus
+{
+  color: #ffffff;
+  outline: 0px;
 }
 
 legend{
-    margin-bottom: 0px;
-    border-bottom: none;
-    font-size: 12px;
+  margin-bottom: 0px;
+  border-bottom: none;
+  font-size: 12px;
 }
 
 .regular-text {
