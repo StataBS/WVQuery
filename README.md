@@ -1,4 +1,3 @@
 # WVQuery
-Find WV from address
-
-
+- find wohnviertel from address
+- get mietpreis by baujahr, zimmerzahl, wohnviertel & renovationsstatus

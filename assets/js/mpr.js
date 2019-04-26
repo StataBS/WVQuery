@@ -20,7 +20,7 @@ var marginBottom = 75;
 
 var rowHeight = 5;
 
-var pdfBaseUrl = "https://mietpreisraster.statabs.ch/?";
+var pdfBaseUrl = "https://mietpreisraster.statabs.ch/openPdf.php?";
 var pdfLink = "";
 
 let zimmerZahlList =    [
@@ -92,11 +92,13 @@ function initMap() {
         bounds: defaultBounds
         ,types: ['address']
         ,componentRestrictions: {country: 'CH'}
+        ,strictBounds: true
+        ,fields: ['place_id', 'name', 'types']
     };
     
     var input = document.getElementById('addresse');    
     var autocomplete = new google.maps.places.Autocomplete(input, options);    
-    autocomplete.setOptions({strictBounds: true});
+    // autocomplete.setOptions({strictBounds: true});
     // We need a map object for the functionality but we don't show it on the page (id="map" -> display:none)
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 11,
@@ -124,7 +126,7 @@ function initMap() {
         return false;
     });
 
-    map.data.loadGeoJson('wvcoordinates.json', {idPropertyName: "TXT"});
+    map.data.loadGeoJson('data/wvcoordinates.json', {idPropertyName: "TXT"});
 
     loadWvList($('select#wohnviertelliste'), 'wvcoordinates.json', 'name');
     loadStaticList($('select#zimmerzahl'), zimmerZahlList);
@@ -227,10 +229,10 @@ function loadStaticList(selobj, data)
 
 function createPdfUrl()
 {
-    console.log("wvlist val: " + $("#wohnviertelliste").val())
-    console.log("baujahrList val: " + $("#baujahr").val())
-    console.log("renovationList val: " + $("#renovation").val())
-    console.log("zimmerZahlList val: " + $("#zimmerzahl").val())
+    // console.log("wvlist val: " + $("#wohnviertelliste").val());
+    // console.log("baujahrList val: " + $("#baujahr").val());
+    // console.log("renovationList val: " + $("#renovation").val());
+    // console.log("zimmerZahlList val: " + $("#zimmerzahl").val());
     
     var pageNo;
     //r1: row, r2: column
