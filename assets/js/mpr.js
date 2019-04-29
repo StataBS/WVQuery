@@ -95,6 +95,7 @@ function initMap() {
         ,componentRestrictions: {country: 'CH'}
         ,strictBounds: true
         ,fields: ['place_id', 'name', 'types']
+        ,language: 'de'
     };
     
     var input = document.getElementById('addresse');    
