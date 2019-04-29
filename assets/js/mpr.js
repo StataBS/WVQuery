@@ -3,6 +3,7 @@ global google
 global $
 */
 var map;
+var geoJson;
 var targetWohnviertel = {};
 var marker;
 
@@ -97,8 +98,7 @@ function initMap() {
     };
     
     var input = document.getElementById('addresse');    
-    var autocomplete = new google.maps.places.Autocomplete(input, options);    
-    // autocomplete.setOptions({strictBounds: true});
+    new google.maps.places.Autocomplete(input, options);    
     // We need a map object for the functionality but we don't show it on the page (id="map" -> display:none)
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 11,
@@ -107,6 +107,7 @@ function initMap() {
             lng: 7.6349769
         }
     });
+
     var geocoder = new google.maps.Geocoder();
     
     document.getElementById('wv-submit').addEventListener('click', function() {
@@ -126,9 +127,12 @@ function initMap() {
         return false;
     });
 
-    map.data.loadGeoJson('data/wvcoordinates.json', {idPropertyName: "TXT"});
+    $.getJSON( "/data/wvcoordinates.json", function( remoteJson ) {
+        geoJson = remoteJson;
+        addGeoJsonToMap();
+        loadWvList($('select#wohnviertelliste'), 'name');
+    });
 
-    loadWvList($('select#wohnviertelliste'), 'wvcoordinates.json', 'name');
     loadStaticList($('select#zimmerzahl'), zimmerZahlList);
     loadStaticList($('select#baujahr'), baujahrList);
     loadStaticList($('select#renovation'), renovationList);
@@ -189,7 +193,7 @@ function findWohnviertel(position){
             targetWohnviertel.Index = wvIndex;
         }
     });
-    
+
     if (targetWohnviertel.Name !== undefined)
         return 1;
     else
@@ -198,20 +202,16 @@ function findWohnviertel(position){
 
 function sortJsonByName(a,b){
         return a.properties["name"] > b.properties["name"] ? 1 : -1;
-};
+}
 
-function loadWvList(selobj,url,nameattr)
+function loadWvList(selobj,nameattr)
 {
-    $.getJSON(url,{},function(data)
+    map.data.forEach(function(feature)
     {
-        data.features = $(data.features).sort(sortJsonByName);
-        $.each(data.features, function(key, value)
-        {
-            $(selobj).append(
-                $('<option></option>')
-                    .val(value.properties["TXT"])
-                    .html(value.properties["name"]));
-        });
+        $(selobj).append(
+            $('<option></option>')
+                .val(feature.getProperty("TXT"))
+                .html(feature.getProperty(nameattr)));
     });
 }
 
@@ -219,7 +219,6 @@ function loadStaticList(selobj, data)
 {
     data.forEach(function(element)
     {
-        
         $(selobj).append(
             $('<option></option>')
                 .val(element.index)
@@ -229,11 +228,6 @@ function loadStaticList(selobj, data)
 
 function createPdfUrl()
 {
-    // console.log("wvlist val: " + $("#wohnviertelliste").val());
-    // console.log("baujahrList val: " + $("#baujahr").val());
-    // console.log("renovationList val: " + $("#renovation").val());
-    // console.log("zimmerZahlList val: " + $("#zimmerzahl").val());
-    
     var pageNo;
     //r1: row, r2: column
     var r1xOrigin;
@@ -275,4 +269,10 @@ function createPdfUrl()
     {
         $("#open-pdf").hide();
     }
+}
+
+function addGeoJsonToMap()
+{
+    geoJson.features = geoJson.features.sort(sortJsonByName);
+    map.data.addGeoJson(geoJson, {idPropertyName: "TXT"});
 }
