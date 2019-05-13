@@ -22,6 +22,9 @@ var marginBottom = 75;
 var rowHeight = 5;
 
 var pdfBaseUrl = "https://mietpreisraster.statabs.ch/openPdf.php?";
+
+// Define the geojson file containing the Wohnvirtel-Polygons; this version has a merged Wphnviertel for Riehen and Bettingen
+var wvJsonFile = "/data/wvRiehenBettingenMerged.json";
 var pdfLink = "";
 
 let zimmerZahlList =    [
@@ -44,7 +47,6 @@ let baujahrList =       [
                         {index: 8, text: '2001 - 2010', yPos: 158},
                         {index: 9, text: 'ab 2011', yPos: 166}
                         ];
-
 
 let renovationList =    [
                         {index: 1, text: 'nicht renoviert', yPosRel: 2.5},
@@ -128,7 +130,7 @@ function initMap() {
         return false;
     });
 
-    $.getJSON( "/data/wvcoordinates.json", function( remoteJson ) {
+    $.getJSON(wvJsonFile, function( remoteJson ) {
         geoJson = remoteJson;
         addGeoJsonToMap();
         loadWvList($('select#wohnviertelliste'), 'name');
