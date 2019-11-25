@@ -2,6 +2,7 @@
 global google
 global $
 */
+
 var map;
 var geoJson;
 var targetWohnviertel = {};
@@ -21,7 +22,7 @@ var marginBottom = 75;
 
 var rowHeight = 5;
 
-var pdfBaseUrl = "https://mietpreisraster.statabs.ch/openPdf.php?";
+var pdfBaseUrl = mprConfig.baseUrl;
 
 // Define the geojson file containing the Wohnvirtel-Polygons; this version has a merged Wphnviertel for Riehen and Bettingen
 var wvJsonFile = "/data/wvRiehenBettingenMerged.json";
@@ -232,6 +233,7 @@ function loadStaticList(selobj, data)
 function createPdfUrl()
 {
     var pageNo;
+    //var pageNoParam;
     //r1: row, r2: column
     var r1xOrigin;
     var r1yOrigin;
@@ -263,8 +265,8 @@ function createPdfUrl()
         r2yOrigin = marginTop;
         r2xExtent = wvxPosList[$("#wohnviertelliste").val() - 1].xPosEnd - wvxPosList[$("#wohnviertelliste").val() - 1].xPosStart + leftPad + rightPad;
         r2yExtent = sheetHeight - marginBottom;
-        
-        pdfLink = pdfBaseUrl + "rect=" + pageNo + "@" + r1xOrigin + "," + r1yOrigin + "," + r1xExtent + "," + r1yExtent + "@" + r2xOrigin + "," + r2yOrigin + "," + r2xExtent + "," + r2yExtent + "#page=" + pageNo;
+		
+        pdfLink = pdfBaseUrl + "rect=" + pageNo + "@" + r1xOrigin + "," + r1yOrigin + "," + r1xExtent + "," + r1yExtent + "@" + r2xOrigin + "," + r2yOrigin + "," + r2xExtent + "," + r2yExtent;
         
         $("#open-pdf").show();
     }
